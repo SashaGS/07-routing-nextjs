@@ -1,10 +1,11 @@
 import css from "./SidebarNotes.module.css";
 import Link from "next/link";
 
+const tags = ["Todo", "Work", "Personal", "Meeting", "Shopping"];
+
 export default function SidebarNotes() {
-  const tags = ["Todo", "Work", "Personal", "Meeting", "Shopping"];
+  
   return (
-    // <aside>
     <ul className={css.menuList}>
       <li className={css.menuItem}>
         <Link href={`/notes/filter/all`} className={css.menuLink}>
@@ -20,6 +21,5 @@ export default function SidebarNotes() {
         </li>
       ))}
     </ul>
-    // {/* </aside> */}
   );
 }

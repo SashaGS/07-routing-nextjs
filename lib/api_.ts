@@ -14,6 +14,7 @@ interface NotesResponse {
 
 export const fetchNotes = async (
   search?: string,
+  tag?: string,
   currentPage?: number,
 ): Promise<NotesResponse> => {
   const config = {
@@ -23,6 +24,7 @@ export const fetchNotes = async (
     },
     params: {
       search: search,
+      tag: tag,
       page: currentPage,
     },
   };

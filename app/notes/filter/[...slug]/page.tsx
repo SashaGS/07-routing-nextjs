@@ -6,16 +6,25 @@ import {
 import { fetchNotes } from "@/lib/api/api";
 import NotesClient from "./Notes.client";
 
-export default async function Notes() {
+interface NotesPageProps {
+ params: Promise<{ slug?: string[] }>
+}
+
+export default async function Notes({ params }: NotesPageProps) {
   const queryClient = new QueryClient();
+  const slugArray = (await params).slug || [];
+  const tag = slugArray[0] || "all"; 
+  
+
+  console.log("Tag from params:", tag);
   await queryClient.prefetchQuery({
     queryKey: ["notes"],
-    queryFn: () => fetchNotes(),
+    queryFn: () => fetchNotes("", tag, 1),
   });
   return (
     <>
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <NotesClient />
+        <NotesClient valTag={tag} />
       </HydrationBoundary>
     </>
   );

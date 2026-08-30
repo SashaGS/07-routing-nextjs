@@ -15,11 +15,19 @@ import NoteForm from "../../../../components/NoteForm/NoteForm";
 import Pagination from "../../../../components/Pagination/Pagination";
 import Loader from "../../../../components/Loader/Loader";
 
-export default function NotesClient() {
+interface NotesClientProps {
+  valTag: string;
+}
+
+export default function NotesClient({ valTag }: NotesClientProps) {
   const [search, setSearch] = useState("");
   const [tag, setTag] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isOpenModal, setisOpenModal] = useState(false);
+
+  useEffect(() => {
+    setTag(valTag);
+  }, [valTag]);
 
   const {
     data: notes,
@@ -28,13 +36,13 @@ export default function NotesClient() {
     isSuccess,
   } = useQuery({
     queryKey: ["note", search, tag, currentPage],
-    queryFn: () => fetchNotes(search, currentPage, tag),
+    queryFn: () => fetchNotes(search,tag, currentPage),
     retry: 1,
     staleTime: 5000,
     placeholderData: keepPreviousData,
     refetchOnMount: false,
   });
-  //   console.log(notes?.totalPages);
+  
   const handleClick = () => {
     setisOpenModal(!isOpenModal);
   };
