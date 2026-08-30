@@ -3,7 +3,7 @@ import { Note } from "@/types/note";
 
 // Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkZxdmFAdWtyLm5ldCIsImlhdCI6MTc4NjYyMjc0Mn0.jkg9S2Kty2N0FrvCg1GBSW9zCjuWvjxmxCLSEkC-ik8";
 
-const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
+const token = process.env.NEXT_PUBLIC_API_TOKEN;
 
 axios.defaults.baseURL = "https://notehub-public.goit.study/api";
 
@@ -15,6 +15,7 @@ interface NotesResponse {
 export const fetchNotes = async (
   search?: string,
   currentPage?: number,
+  tag?: string,
 ): Promise<NotesResponse> => {
   const config = {
     headers: {
@@ -24,10 +25,11 @@ export const fetchNotes = async (
     params: {
       search: search,
       page: currentPage,
+      tag: tag,
     },
   };
 
-  const resp = await axios.get<NotesResponse>("/notes", config);
+  const resp = await axios.get<NotesResponse>("/notes/filter", config);
   return resp.data;
 };
 

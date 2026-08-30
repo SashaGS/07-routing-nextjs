@@ -8,15 +8,16 @@ import { useDebouncedCallback } from "use-debounce";
 
 import { fetchNotes } from "@/lib/api/api";
 
-import Modal from "../../components/Modal/Modal";
-import SearchBox from "../../components/SearchBox/SearchBox";
-import NoteList from "../../components/NoteList/NoteList";
-import NoteForm from "../../components/NoteForm/NoteForm";
-import Pagination from "../../components/Pagination/Pagination";
-import Loader from "../../components/Loader/Loader";
+import Modal from "../../../../components/Modal/Modal";
+import SearchBox from "../../../../components/SearchBox/SearchBox";
+import NoteList from "../../../../components/NoteList/NoteList";
+import NoteForm from "../../../../components/NoteForm/NoteForm";
+import Pagination from "../../../../components/Pagination/Pagination";
+import Loader from "../../../../components/Loader/Loader";
 
 export default function NotesClient() {
   const [search, setSearch] = useState("");
+  const [tag, setTag] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [isOpenModal, setisOpenModal] = useState(false);
 
@@ -26,8 +27,8 @@ export default function NotesClient() {
     isError,
     isSuccess,
   } = useQuery({
-    queryKey: ["note", search, currentPage],
-    queryFn: () => fetchNotes(search, currentPage),
+    queryKey: ["note", search, tag, currentPage],
+    queryFn: () => fetchNotes(search, currentPage, tag),
     retry: 1,
     staleTime: 5000,
     placeholderData: keepPreviousData,
