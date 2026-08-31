@@ -18,10 +18,6 @@ const NoteDetailsClients = () => {
     refetchOnMount: false,
   });
 
-  //   const formattedDate = note?.updatedAt
-  //     ? `Updated at: ${note?.updatedAt}`
-  //     : `Created at: ${note?.createdAt}`;
-
   if (isLoading) {
     return <p>Loading, please wait...</p>;
   }
