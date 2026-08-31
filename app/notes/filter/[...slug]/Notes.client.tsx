@@ -21,13 +21,17 @@ interface NotesClientProps {
 
 export default function NotesClient({ valTag }: NotesClientProps) {
   const [search, setSearch] = useState("");
-  const [tag, setTag] = useState("");
+  // const [tag, setTag] = useState(valTag);
   const [currentPage, setCurrentPage] = useState(1);
   const [isOpenModal, setisOpenModal] = useState(false);
 
-  useEffect(() => {
-    setTag(valTag);
-  }, [valTag]);
+  // useEffect(() => {
+  //   if (valTag) {
+  //     setTag(valTag);
+  //   }
+  // }, [valTag]);
+
+  const tag = valTag;
 
   const {
     data: notes,
@@ -36,13 +40,13 @@ export default function NotesClient({ valTag }: NotesClientProps) {
     isSuccess,
   } = useQuery({
     queryKey: ["note", search, tag, currentPage],
-    queryFn: () => fetchNotes(search,tag, currentPage),
+    queryFn: () => fetchNotes(search, tag, currentPage),
     retry: 1,
     staleTime: 5000,
     placeholderData: keepPreviousData,
     refetchOnMount: false,
   });
-  
+
   const handleClick = () => {
     setisOpenModal(!isOpenModal);
   };

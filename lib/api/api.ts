@@ -4,8 +4,10 @@ import { Note } from "@/types/note";
 // Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkZxdmFAdWtyLm5ldCIsImlhdCI6MTc4NjYyMjc0Mn0.jkg9S2Kty2N0FrvCg1GBSW9zCjuWvjxmxCLSEkC-ik8";
 
 // const token = process.env.NEXT_PUBLIC_API_TOKEN;
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkZxdmFAdWtyLm5ldCIsImlhdCI6MTc4NjYyMjc0Mn0.jkg9S2Kty2N0FrvCg1GBSW9zCjuWvjxmxCLSEkC-ik8";
-// console.log("Token from env:", token);
+// const token = <string>process.env.API_TOKEN;
+const token =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkZxdmFAdWtyLm5ldCIsImlhdCI6MTc4NjYyMjc0Mn0.jkg9S2Kty2N0FrvCg1GBSW9zCjuWvjxmxCLSEkC-ik8";
+// console.log("Token from env:", `${token}`);
 axios.defaults.baseURL = "https://notehub-public.goit.study/api";
 
 interface NotesResponse {
@@ -17,7 +19,6 @@ export const fetchNotes = async (
   search?: string,
   tag?: string,
   currentPage?: number,
-  
 ): Promise<NotesResponse> => {
   const config = {
     headers: {
@@ -26,10 +27,9 @@ export const fetchNotes = async (
     },
     params: {
       search: search,
-       // ВАЖЛИВО: якщо tag === "all" або undefined → не додаємо параметр
+      // ВАЖЛИВО: якщо tag === "all" або undefined → не додаємо параметр
       ...(tag && tag !== "all" ? { tag } : {}),
       page: currentPage,
-      
     },
   };
 
