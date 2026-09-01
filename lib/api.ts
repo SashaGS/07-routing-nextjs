@@ -3,7 +3,7 @@ import { Note } from "@/types/note";
 
 // Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkZxdmFAdWtyLm5ldCIsImlhdCI6MTc4NjYyMjc0Mn0.jkg9S2Kty2N0FrvCg1GBSW9zCjuWvjxmxCLSEkC-ik8";
 
-const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
+const token = process.env.NEXT_PUBLIC_API_TOKEN;
 
 axios.defaults.baseURL = "https://notehub-public.goit.study/api";
 
@@ -24,12 +24,14 @@ export const fetchNotes = async (
     },
     params: {
       search: search,
-      tag: tag,
+      // ВАЖЛИВО: якщо tag === "all" або undefined → не додаємо параметр
+      ...(tag && tag !== "all" ? { tag } : {}),
       page: currentPage,
     },
   };
 
   const resp = await axios.get<NotesResponse>("/notes", config);
+  // console.log(tag);
   return resp.data;
 };
 
@@ -38,6 +40,9 @@ export const fetchNoteById = async (id: Note["id"]): Promise<Note> => {
     headers: {
       accept: "application/json",
       Authorization: `Bearer ${token}`,
+    },
+    params: {
+      id: id,
     },
   };
   const { data } = await axios.get(`/notes/${id}`, config);
